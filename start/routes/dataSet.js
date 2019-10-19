@@ -2,6 +2,5 @@ const Route = use("Route");
 
 Route.group(() => {
   Route.post("dataSet", "DataSetController");
-})
-  .prefix("v1")
-  .namespace("DataSet");
+  Route.post("geolocation", "GeolocationController.store");
+}).prefix("api/v1");

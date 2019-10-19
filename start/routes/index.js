@@ -15,6 +15,7 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
+Route.get("/", () => "Me chupa seu indiano");
 // Import router by Data Set
 require("./dataSet");
 
