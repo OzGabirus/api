@@ -3,31 +3,30 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-
-const Geolocation = use("App/Models/Geolocation");
+const Site = use("App/Models/Site");
 const Database = use("Database");
 
 /**
- * Resourceful controller for interacting with geolocations
+ * Resourceful controller for interacting with sites
  */
-class GeolocationController {
+class SiteController {
   /**
-   * Show a list of all geolocations.
-   * GET geolocations
+   * Show a list of all sites.
+   * GET sites
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ response }) {
-    var geolocation = await Database.table("geolocations").orderBy("latitude");
-    return response.send(geolocation);
+  async index({ request, response, view }) {
+    var sites = await Database.table("sites").orderBy("name");
+    return response.send(sites);
   }
 
   /**
-   * Create/save a new geolocation.
-   * POST geolocations
+   * Create/save a new site.
+   * POST sites
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -35,14 +34,15 @@ class GeolocationController {
    */
   async store({ request, response }) {
     try {
-      const { latitude, longitude, radius } = request.all();
+      const { name, description, timezone, geo_id } = request.all();
 
-      var geolocation = await Geolocation.create({
-        latitude,
-        longitude,
-        radius
+      var site = await Site.create({
+        name,
+        description,
+        timezone,
+        geo_id
       });
-      return response.status(201).send(geolocation);
+      return response.status(201).send(site);
     } catch (error) {
       return response.status(400).send({
         message: "Erro a processar a sua solicitação",
@@ -52,8 +52,8 @@ class GeolocationController {
   }
 
   /**
-   * Display a single geolocation.
-   * GET geolocations/:id
+   * Display a single site.
+   * GET sites/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -63,8 +63,8 @@ class GeolocationController {
   async show({ params, request, response, view }) {}
 
   /**
-   * Update geolocation details.
-   * PUT or PATCH geolocations/:id
+   * Update site details.
+   * PUT or PATCH sites/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -73,8 +73,8 @@ class GeolocationController {
   async update({ params, request, response }) {}
 
   /**
-   * Delete a geolocation with id.
-   * DELETE geolocations/:id
+   * Delete a site with id.
+   * DELETE sites/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -83,4 +83,4 @@ class GeolocationController {
   async destroy({ params, request, response }) {}
 }
 
-module.exports = GeolocationController;
+module.exports = SiteController;

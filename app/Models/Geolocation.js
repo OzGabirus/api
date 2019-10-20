@@ -7,6 +7,9 @@ class Geolocation extends Model {
   measurement() {
     return this.hasOne("App/Model/Measurement");
   }
+  site() {
+    return this.hasOne("App/Model/Site");
+  }
 }
 
 module.exports = Geolocation;
